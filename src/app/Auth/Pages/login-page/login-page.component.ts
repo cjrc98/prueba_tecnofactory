@@ -22,7 +22,7 @@ export class LoginPageComponent {
   submit() {
     if (this.form.valid) {
       const { email, pass } = this.form.value;
-      console.log('📨 Enviando datos:', { email, pass });
+      console.log('📨Enviando datos:', { email, pass });
       // Aquí puedes llamar a un servicio de autenticación
     } else {
       this.form.markAllAsTouched(); // Muestra errores si el usuario no tocó los campos
