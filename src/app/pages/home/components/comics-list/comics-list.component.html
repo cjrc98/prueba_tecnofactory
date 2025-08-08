@@ -1,5 +1,5 @@
 <article class="p-4 bg-white flex flex-col gap-4 font-['Montserrat',_sans-serif] text-base font-normal">
-  <div class="flex justify-between items-center mb-4">
+  <div class="flex justify-center items-center mb-4 gap-6">
     <button
       (click)="prevPage()"
       [disabled]="currentPage() === 0"
@@ -21,7 +21,7 @@
   @if (isLoading()) {
     <app-loader [visible]="isLoading()"></app-loader>
   } @else {
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:px-[10%]">
       @for (comic of comics(); track comic.id) {
         <app-card [comic]="comic"></app-card>
       } @empty {

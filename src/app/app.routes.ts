@@ -4,6 +4,8 @@ import { ComicDetailComponent } from './features/pages/comic-detail/comic-detail
 import { alreadyLoggedGuard } from './core/guards/user.guard';
 import { LayoutComponent } from './layout/layout.component';
 import { authGuard } from './core/guards/auth-guard.guard';
+import { FavoritesComponent } from './features/pages/favorites/favorites.component';
+import { ProfileComponent } from './features/pages/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -16,6 +18,8 @@ export const routes: Routes = [
         component: HomePageComponent,
       },
       { path: 'comics/:id', component: ComicDetailComponent },
+      { path: 'favorites', component: FavoritesComponent },
+      { path: 'profile', component: ProfileComponent },
     ],
   },
   {

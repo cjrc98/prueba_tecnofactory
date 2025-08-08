@@ -1,5 +1,12 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { Firestore, collection, doc, setDoc, getDocs, deleteDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  doc,
+  setDoc,
+  getDocs,
+  deleteDoc,
+} from '@angular/fire/firestore';
 import { Auth, user } from '@angular/fire/auth';
 import { Comic } from '../../domain/models/comic.model';
 import { collectionData } from '@angular/fire/firestore';
@@ -20,26 +27,30 @@ export class FavoritesService {
   }
 
   private async loadFavorites() {
-    const uid = this.currentUser()?.uid;
+    const uid = localStorage.getItem('uid');
     if (!uid) return;
 
-    const favCollection = collection(this.firestore, `users/${uid}/favorites`);
-    const snapshot = await getDocs(favCollection);
-    const data = snapshot.docs.map(doc => doc.data() as Comic);
-    this.favorites.set(data);
+    const favRef = collection(this.firestore, `users/${uid}/favorites`);
+    const favSnap = await getDocs(favRef);
+    const favorites = favSnap.docs.map((d) => d.data() as Comic);
+    if (favorites) {
+      console.log('Favoritos:', favorites);
+      this.favorites.set(favorites);
+    }
+
   }
 
   async toggleFavorite(comic: Comic) {
-    const uid = this.currentUser()?.uid;
+    const uid = localStorage.getItem('uid');
     if (!uid) return;
 
     const favDoc = doc(this.firestore, `users/${uid}/favorites/${comic.id}`);
     const current = this.favorites();
-    const exists = current.some(c => c.id === comic.id);
+    const exists = current.some((c) => c.id === comic.id);
 
     if (exists) {
       await deleteDoc(favDoc);
-      this.favorites.set(current.filter(c => c.id !== comic.id));
+      this.favorites.set(current.filter((c) => c.id !== comic.id));
     } else {
       await setDoc(favDoc, comic);
       this.favorites.set([...current, comic]);
@@ -47,6 +58,6 @@ export class FavoritesService {
   }
 
   isFavorite(id: number): boolean {
-    return this.favorites().some(c => c.id === id);
+    return this.favorites().some((c) => c.id === id);
   }
 }

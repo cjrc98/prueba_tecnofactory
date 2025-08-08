@@ -1,1 +1,73 @@
-<p>favorites works!</p>
+<section class="px-4 md:px-[10%] py-6">
+  <h2 class="mb-4 text-2xl font-bold text-zinc-400">Mis Favoritos</h2>
+
+  @if (favoritesSrv.favorites().length === 0) {
+    <div class="flex items-center justify-center rounded-2xl border border-dashed border-zinc-700 bg-zinc-900/40 p-8 text-zinc-400">
+      <div class="text-center">
+        <div class="mx-auto mb-3 h-10 w-10 rounded-full bg-zinc-800/70 flex items-center justify-center">
+          <!-- ícono vacío -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-zinc-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21.364l-7.682-7.682a4.5 4.5 0 010-6.364z"/>
+          </svg>
+        </div>
+        <p>No tienes favoritos todavía.</p>
+      </div>
+    </div>
+  } @else {
+    <ul class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+      @for (comic of favoritesSrv.favorites(); track comic.id) {
+        <li class="group rounded-2xl border border-zinc-800 bg-zinc-950/70 shadow-sm ring-1 ring-transparent hover:ring-zinc-700 transition">
+          <!-- Imagen -->
+          <div class="relative overflow-hidden rounded-t-2xl bg-zinc-900">
+            <div class="aspect-[3/4] w-full flex items-center justify-center">
+              <img
+                [src]="comic.image"
+                [alt]="comic.title"
+                class="h-full w-full object-contain p-3"
+                loading="lazy"
+              />
+            </div>
+
+            <!-- Botón corazón (quitar) -->
+            <button
+              type="button"
+              (click)="favoritesSrv.toggleFavorite(comic)"
+              class="absolute top-2 right-2 rounded-full border border-zinc-700/70 bg-zinc-900/70 p-2 backdrop-blur hover:bg-zinc-800/80 transition"
+              aria-label="Quitar de favoritos"
+            >
+              <!-- corazón lleno -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   class="h-5 w-5 text-red-500 fill-current">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6 3.99 4 6.5 4c1.74 0 3.41 1.01 4.22 2.53h.56C13.09 5.01 14.76 4 16.5 4 19.01 4 21 6 21 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Contenido -->
+          <div class="p-3 sm:p-4">
+            <h3 class="mb-1 line-clamp-2 text-base font-semibold text-zinc-100">
+              {{ comic.title }}
+            </h3>
+            <p class="mb-3 line-clamp-3 text-sm text-zinc-400">
+              {{ comic.description }}
+            </p>
+
+            <div class="flex items-center justify-between">
+              <span class="rounded-md bg-zinc-800 px-2 py-1 text-[11px] font-medium text-zinc-300">
+                ID: {{ comic.id }}
+              </span>
+
+              <button
+                type="button"
+                (click)="favoritesSrv.toggleFavorite(comic)"
+                class="inline-flex items-center gap-2 rounded-lg border border-zinc-700 px-3 py-1.5 text-sm font-medium text-zinc-200 hover:bg-zinc-800 transition"
+              >
+                Quitar
+              </button>
+            </div>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+</section>

@@ -7,8 +7,16 @@ import {
   UserCredential,
 } from '@angular/fire/auth';
 import { Observable, from, map } from 'rxjs';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+} from '@angular/fire/firestore';
 import { UserInterface } from '../interfaces/user.interface';
+import { Comic } from '../../domain/models/comic.model';
 
 @Injectable({
   providedIn: 'root',
@@ -54,13 +62,25 @@ export class AuthService {
       map((cred: UserCredential) => {
         const uid = cred.user?.uid;
         if (!uid) throw new Error('No se pudo obtener el UID del usuario');
-        
+        this.getUserByUid(uid);
         return uid;
       })
     );
   }
 
-  logout(){
+  async getUserByUid(uid: string) {
+    const userRef = doc(this.firestore, `users/${uid}`);
+    const snap = await getDoc(userRef);
+
+    if (snap.exists()) {
+      console.log('Datos del usuario:', snap.data());
+      return snap.data(); // Datos del usuario
+    } else {
+      return null; // No existe el documento
+    }
+  }
+
+  logout() {
     this.firebaseAuth.signOut();
     localStorage.removeItem('uid');
   }
