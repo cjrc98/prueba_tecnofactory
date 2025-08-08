@@ -1,14 +1,35 @@
 import { Routes } from '@angular/router';
-import { LoginPageComponent } from './Auth/Pages/login-page/login-page.component';
-import { RegisterPageComponent } from './Auth/Pages/register-page/register-page.component';
+import { HomePageComponent } from './pages/home/home-page/home-page.component';
+import { ComicDetailComponent } from './features/pages/comic-detail/comic-detail.component';
+import { alreadyLoggedGuard } from './core/guards/user.guard';
+import { LayoutComponent } from './layout/layout.component';
 
 export const routes: Routes = [
-    {
-        path: 'login-page',
-        component: LoginPageComponent
-    },
-    {
-        path: 'register-page',
-        component: RegisterPageComponent
-    }
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        component: HomePageComponent,
+      },
+      { path: 'comics/:id', component: ComicDetailComponent },
+    ],
+  },
+  {
+    path: '',
+    loadChildren: () => import('./Auth/auth.routes').then((m) => m.routes),
+    canActivate: [alreadyLoggedGuard],
+  },
+  {
+    path: '404',
+    loadComponent: () =>
+      import('./pages/not-found/not-found.component').then(
+        (m) => m.NotFoundComponent
+      ),
+  },
+  {
+    path: '**',
+    redirectTo: '/404',
+  },
 ];

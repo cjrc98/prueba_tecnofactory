@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { Router } from '@angular/router';
+import { AuthService } from '../../Services/auth.service';
 @Component({
   selector: 'app-login-page',
   standalone: true, // si estás usando Angular 14+ con standalone components
@@ -11,6 +12,8 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginPageComponent {
   form: FormGroup;
+  router = inject(Router);
+  authService = inject(AuthService);
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -21,9 +24,20 @@ export class LoginPageComponent {
 
   submit() {
     if (this.form.valid) {
-      const { email, pass } = this.form.value;
-      console.log('📨Enviando datos:', { email, pass });
-      // Aquí puedes llamar a un servicio de autenticación
+      const rawForm = this.form.getRawValue();
+     this.authService
+        .login(
+          rawForm.email,
+          rawForm.pass,
+        )
+        .subscribe({
+          next: () =>{
+            this.router.navigate(['/']);
+          },
+          error: (err) => {
+            console.log(err.code);
+          }
+        });
     } else {
       this.form.markAllAsTouched(); // Muestra errores si el usuario no tocó los campos
     }

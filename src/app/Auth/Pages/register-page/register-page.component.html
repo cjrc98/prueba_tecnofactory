@@ -1,66 +1,82 @@
-   <div class="flex items-center justify-center min-h-screen bg-gray-100">
-      <div
-        class="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0"
-      >
-        <!-- left side -->
-        <div class="flex flex-col justify-center p-8 md:p-14">
-          <span class="mb-3 text-4xl font-bold">Registrar Cuenta Nueva</span>
-          <span class="font-light text-gray-400 mb-8">
-            Bienvenido! Por favor Registra tus datos.
-          </span>
-          <div class="py-4">
-            <span class="mb-2 text-md">Nombre</span>
-            <input
-              type="text"
-              class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-              name="name"
-              id="name"
-            />
-          </div>
-          <div class="py-4">
-            <span class="mb-2 text-md">Identificación</span>
-            <input
-              type="text"
-              class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-              name="user_id"
-              id="user_id"
-            />
-          </div>
-          
-          <div class="py-4">
-            <span class="mb-2 text-md">Email</span>
-            <input
-              type="text"
-              class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-              name="email"
-              id="email"
-            />
-          </div>
-          <div class="py-4">
-            <span class="mb-2 text-md">Contraseña</span>
-            <input
-              type="password"
-              name="pass"
-              id="pass"
-              class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-            />
-          </div>
-          <button
-            class="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300"
-          >
-            Registrar
-          </button>
-         
-          
-        </div>
-        <!-- {/* right side */} -->
-        <div class="relative">
-          <img
-            src="https://pixabay.com/get/g9b22b78bf95ae2e7a3d14683e4bd4368c74589a044377de3e75ee6343182aeccd60d8e19ef152af1755dc2f525e8f4bfdd7c0726c4484433bb038a88cc92e02a_1280.png"
-            alt="img"
-            class="w-[400px] h-full hidden rounded-r-2xl md:block object-cover"
-          />
-      
-        </div>
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
+    <!-- left side -->
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col justify-center p-8 md:p-14">
+      <span class="mb-3 text-4xl font-bold">Registrar Cuenta Nueva</span>
+      <span class="font-light text-gray-400 mb-8">
+        Bienvenido! Por favor Registra tus datos.
+      </span>
+
+      <!-- Nombre -->
+      <div class="py-2">
+        <span class="mb-2 text-md">Nombre</span>
+        <input type="text" formControlName="username" class="w-full p-2 border border-gray-300 rounded-md" />
+        @if (username?.touched && username?.invalid) {
+        <div class="text-red-500 text-sm">El nombre es obligatorio.</div>
+        }
       </div>
+
+      <!-- Identificación -->
+      <div class="py-2">
+        <span class="mb-2 text-md">Identificación</span>
+        <input type="text" formControlName="cedula" class="w-full p-2 border border-gray-300 rounded-md" />
+        @if (cedula?.touched && cedula?.invalid) {
+        <div class="text-red-500 text-sm">
+          @if (cedula?.errors?.['required']) {
+          <div>La identificación es requerida.</div>
+          }
+          @if (cedula?.errors?.['minlength']) {
+          <div>Mínimo 8 caracteres.</div>
+          }
+        </div>
+        }
+      </div>
+
+      <!-- Email -->
+      <div class="py-2">
+        <span class="mb-2 text-md">Email</span>
+        <input type="email" formControlName="email" class="w-full p-2 border border-gray-300 rounded-md" />
+        @if (email?.touched && email?.invalid) {
+        <div class="text-red-500 text-sm">
+          @if (email?.errors?.['required']) {
+          <div>El correo es obligatorio.</div>
+          }
+          @if (email?.errors?.['email']) {
+          <div>Formato de correo inválido.</div>
+          }
+        </div>
+        }
+      </div>
+
+      <!-- Contraseña -->
+      <div class="py-2">
+        <span class="mb-2 text-md">Contraseña</span>
+        <input type="password" formControlName="pass" class="w-full p-2 border border-gray-300 rounded-md" />
+        @if (pass?.touched && pass?.invalid) {
+        <div class="text-red-500 text-sm">
+          @if (pass?.errors?.['required']) {
+          <div>La contraseña es obligatoria.</div>
+          }
+          @if (pass?.errors?.['minlength']) {
+          <div>Mínimo 6 caracteres.</div>
+          }
+        </div>
+        }
+      </div>
+
+      <button type="submit" class="w-full bg-black text-white p-2 rounded-lg mt-6">
+        Registrar
+      </button>
+    </form>
+
+
+    <!-- {/* right side */} -->
+    <div class="relative">
+      <img
+        src="https://pixabay.com/get/g9b22b78bf95ae2e7a3d14683e4bd4368c74589a044377de3e75ee6343182aeccd60d8e19ef152af1755dc2f525e8f4bfdd7c0726c4484433bb038a88cc92e02a_1280.png"
+        alt="img" class="w-[400px] h-full hidden rounded-r-2xl md:block object-cover" />
+
     </div>
+  </div>
+</div>

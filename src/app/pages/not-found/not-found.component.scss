@@ -1,0 +1,103 @@
+*{
+    margin: 0;
+    padding: 0;
+       
+}
+.container{
+    background-color: #073349;
+    margin: 0 auto;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    z-index: -3;
+}
+.contenedor-imagenes{
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    width: 314px;
+    height: 300px;
+    position: relative;
+}
+.contenedor-header{
+    width: 314px;
+    height: 40px;
+    padding-top: 50px;
+}
+.contenedor-footer{
+    width: 314px;
+    height: 40px;
+    padding-bottom: 50px;
+    text-align: center;
+}
+p{
+    margin: 0;
+    text-align: center;
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.img{
+    width: 60%;
+    height: 60%;
+}
+.planeta{
+    height: 350px;
+    width:  350px;
+   
+}
+.planeta img{
+    position: absolute;
+    z-index: 0;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 15%;
+   
+}
+.cohete img{
+    position: absolute;
+    height: 250px;
+    width:  250px;
+    z-index: 3;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 4%;
+    animation: rotacion;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+.numero1{
+    position: absolute;
+    z-index: 2;
+    height: 150px;
+    width:  150px;
+    left: 30px;
+    bottom: 60px;
+}
+
+.numero2{
+    position: absolute;
+    z-index: 2;
+    height: 150px;
+    width:  150px;
+    right: -25px;
+    bottom: 60px;
+}
+a{
+    text-decoration: none;
+    color: white;
+    text-align: center; 
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+}
+@keyframes rotacion{
+    from{transform: rotateZ(0deg); transform-origin: center;}
+    to{transform: rotateZ(360deg);}
+}
