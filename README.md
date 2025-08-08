@@ -1,10 +1,10 @@
 # PruebaTecnofactory
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
+Este proyecto fue generado utilizando [Angular CLI](https://github.com/angular/angular-cli) versión 19.2.15.
 
-## Development server
+## Servidor de desarrollo
 
-To start a local development server, run:
+Para iniciar un servidor de desarrollo local, ejecuta:
 
 ```bash
 ng serve
