@@ -54,6 +54,7 @@ export class AuthService {
       map((cred: UserCredential) => {
         const uid = cred.user?.uid;
         if (!uid) throw new Error('No se pudo obtener el UID del usuario');
+        
         return uid;
       })
     );

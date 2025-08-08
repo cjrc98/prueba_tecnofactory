@@ -3,3 +3,10 @@ export interface UserInterface {
     username: string;
     cedula: string;
 }
+
+export interface UserProfile {
+  uid: string;
+  email: string;
+  username: string;
+  cedula: string;
+}
