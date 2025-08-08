@@ -3,13 +3,14 @@ import { Component, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Comic } from '../../../../domain/models/comic.model';
 import { MarvelApiService } from '../../../../core/services/marvel.service';
+import { CardComponent } from "../card/card.component";
+import { LoaderComponent } from "../../../../shared/components/loader/loader.component";
 
 
 @Component({
   selector: 'app-comics-list',
   templateUrl: './comics-list.component.html',
-  styleUrls: ['./comics-list.component.css'],
-  imports: [RouterModule],
+  imports: [RouterModule, CardComponent, LoaderComponent],
 })
 export class ComicsListComponent {
   comics = signal<Comic[]>([]); 

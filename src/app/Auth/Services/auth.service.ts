@@ -6,7 +6,7 @@ import {
   updateProfile,
   UserCredential,
 } from '@angular/fire/auth';
-import { Observable, from } from 'rxjs';
+import { Observable, from, map } from 'rxjs';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { UserInterface } from '../interfaces/user.interface';
 
@@ -47,13 +47,20 @@ export class AuthService {
     return from(promise);
   }
 
-  login(email: string, password: string): Observable<void> {
-    const promise = signInWithEmailAndPassword(
-      this.firebaseAuth,
-      email,
-      password
-    ).then(() => {});
-    console.log(promise);
-    return from(promise);
+  login(email: string, password: string): Observable<string> {
+    return from(
+      signInWithEmailAndPassword(this.firebaseAuth, email, password)
+    ).pipe(
+      map((cred: UserCredential) => {
+        const uid = cred.user?.uid;
+        if (!uid) throw new Error('No se pudo obtener el UID del usuario');
+        return uid;
+      })
+    );
+  }
+
+  logout(){
+    this.firebaseAuth.signOut();
+    localStorage.removeItem('uid');
   }
 }

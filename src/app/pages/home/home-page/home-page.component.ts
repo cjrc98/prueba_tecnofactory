@@ -4,8 +4,7 @@ import { ComicsListComponent } from "../components/comics-list/comics-list.compo
 @Component({
   selector: 'app-home-page',
   imports: [ComicsListComponent],
-  templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css'
+  templateUrl: './home-page.component.html'
 })
 export class HomePageComponent {
 

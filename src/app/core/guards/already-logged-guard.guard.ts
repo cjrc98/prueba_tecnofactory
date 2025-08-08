@@ -6,5 +6,5 @@ export const alreadyLoggedGuard: CanActivateFn = () => {
   const router = inject(Router);
   const uid = localStorage.getItem('uid');
 
-  return uid ? router.navigate(['/']) : true;
+  return uid ? router.createUrlTree(['/']) : true;
 };

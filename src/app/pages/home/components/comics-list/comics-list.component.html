@@ -1,26 +1,32 @@
-<div class="p-4" style="background: #fafafa;">
+<article class="p-4 bg-white flex flex-col gap-4 font-['Montserrat',_sans-serif] text-base font-normal">
   <div class="flex justify-between items-center mb-4">
-    <button (click)="prevPage()" class="px-4 py-2 bg-gray-300 rounded prev-button" [disabled]="currentPage() === 0">
+    <button
+      (click)="prevPage()"
+      [disabled]="currentPage() === 0"
+      class="px-4 py-2 rounded bg-gradient-to-b from-[#eec040] to-[#f9c41c] text-black disabled:opacity-50 disabled:cursor-not-allowed"
+    >
       Anterior
     </button>
+
     <span class="text-gray-700">Página {{ currentPage() + 1 }}</span>
-    <button (click)="nextPage()" class="px-4 py-2 bg-gray-300 rounded next-button">
+
+    <button
+      (click)="nextPage()"
+      class="px-4 py-2 rounded bg-gradient-to-b from-[#eec040] to-[#f9c41c] text-black"
+    >
       Siguiente
     </button>
   </div>
 
   @if (isLoading()) {
-    <div class="text-center py-10 text-gray-600">Cargando cómics...</div>
+    <app-loader [visible]="isLoading()"></app-loader>
   } @else {
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 ">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
       @for (comic of comics(); track comic.id) {
-        <div class=" rounded shadow p-1 relative pb-[60px] shadow-lg rounded-[20px] p-4 bg-white" style="max-width: 400px; min-width: 200px;">
-          <img [src]="comic.image" [alt]="comic.title" class="w-full h-90 object-fill mb-2 rounded-[20px]" />
-          <h3 class="text-lg font-bold truncate w-full block">{{ comic.title }}</h3>
-          <p class="price">${{comic.price}}</p>
-          <button [routerLink]="['/comics', comic.id]" class="btn-details">Detalles</button>
-        </div>
+        <app-card [comic]="comic"></app-card>
+      } @empty {
+        <div class="text-center py-10 text-gray-600">No se encontraron cómics.</div>
       }
     </div>
   }
-</div>
+</article>

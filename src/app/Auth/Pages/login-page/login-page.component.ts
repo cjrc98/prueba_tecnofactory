@@ -1,14 +1,19 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
 @Component({
   selector: 'app-login-page',
   standalone: true, // si estás usando Angular 14+ con standalone components
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.css'
+  styleUrl: './login-page.component.css',
 })
 export class LoginPageComponent {
   form: FormGroup;
@@ -18,28 +23,25 @@ export class LoginPageComponent {
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      pass: ['', [Validators.required, Validators.minLength(6)]]
+      pass: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
   submit() {
     if (this.form.valid) {
       const rawForm = this.form.getRawValue();
-     this.authService
-        .login(
-          rawForm.email,
-          rawForm.pass,
-        )
-        .subscribe({
-          next: () =>{
-            this.router.navigate(['/']);
-          },
-          error: (err) => {
-            console.log(err.code);
-          }
-        });
+
+      this.authService.login(rawForm.email, rawForm.pass).subscribe({
+        next: (uid: string) => {
+          localStorage.setItem('uid', uid);
+          this.router.navigate(['/']);
+        },
+        error: (err) => {
+          console.log(err?.code || err?.message || err);
+        },
+      });
     } else {
-      this.form.markAllAsTouched(); // Muestra errores si el usuario no tocó los campos
+      this.form.markAllAsTouched();
     }
   }
 
