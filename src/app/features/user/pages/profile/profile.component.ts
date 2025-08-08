@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { Router } from '@angular/router';
-import { AuthService } from '../../../Auth/Services/auth.service';
+import { AuthService } from '../../../../Auth/Services/auth.service';
 
 type UserProfile = {
   username?: string;
@@ -26,17 +26,15 @@ export class ProfileComponent {
   error = signal<string | null>(null);
 
   constructor() {
-    const uid = (typeof window !== 'undefined') ? localStorage.getItem('uid') : null;
-    if (!uid) {
-      this.error.set('No se encontró sesión activa');
-      this.loading.set(false);
-      return;
-    }
+    this.loadData();
+  }
 
-    this.auth.getUserByUid(uid)
-      .then((res: any) => this.user.set(res))
-      .catch((e) => this.error.set('No se pudo cargar el perfil'))
-      .finally(() => this.loading.set(false));
+  loadData(){
+    this.loading.set(true);
+    this.auth.getUserByUid(localStorage.getItem('uid')!)
+    .then((res: any) => this.user.set(res))
+    .catch((e) => this.error.set('No se pudo cargar el perfil'))
+    .finally(() => this.loading.set(false));
   }
 
   get initials(): string {

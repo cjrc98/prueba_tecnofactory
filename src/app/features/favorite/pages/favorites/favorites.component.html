@@ -1,0 +1,38 @@
+<section class="px-4 md:px-[10%] py-6">
+  <h2 class="mb-4 text-2xl font-bold text-zinc-400">Mis Favoritos</h2>
+
+  <ul class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+    @for (comic of comics(); track comic.id) {
+    <app-card-favorite [comic]="comic" (toggle)="toggleFavorite($event)">
+    </app-card-favorite>
+
+    } @empty {
+    <section
+      class="flex items-center justify-center rounded-2xl border border-dashed border-zinc-700 bg-zinc-900/40 p-8 text-zinc-400"
+    >
+      <div class="text-center">
+        <div
+          class="mx-auto mb-3 h-10 w-10 rounded-full bg-zinc-800/70 flex items-center justify-center"
+        >
+          <!-- ícono vacío -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 text-zinc-300"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.6"
+              d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21.364l-7.682-7.682a4.5 4.5 0 010-6.364z"
+            />
+          </svg>
+        </div>
+        <p>No tienes favoritos todavía.</p>
+      </div>
+    </section>
+    }
+  </ul>
+</section>

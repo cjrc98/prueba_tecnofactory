@@ -1,82 +1,103 @@
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-  <div class="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
-    <!-- left side -->
+<article class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div
+    class="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0"
+  >
 
-    <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col justify-center p-8 md:p-14">
+    <form
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      class="flex flex-col justify-center p-8 md:p-14"
+    >
       <span class="mb-3 text-4xl font-bold">Registrar Cuenta Nueva</span>
       <span class="font-light text-gray-400 mb-8">
         Bienvenido! Por favor Registra tus datos.
       </span>
 
-      <!-- Nombre -->
       <div class="py-2">
         <span class="mb-2 text-md">Nombre</span>
-        <input type="text" formControlName="username" class="w-full p-2 border border-gray-300 rounded-md" />
+        <input
+          type="text"
+          formControlName="username"
+          class="w-full p-2 border border-gray-300 rounded-md"
+        />
         @if (username?.touched && username?.invalid) {
         <div class="text-red-500 text-sm">El nombre es obligatorio.</div>
         }
       </div>
 
-      <!-- Identificación -->
       <div class="py-2">
         <span class="mb-2 text-md">Identificación</span>
-        <input type="text" formControlName="cedula" class="w-full p-2 border border-gray-300 rounded-md" />
+        <input
+          type="number"
+          formControlName="cedula"
+          class="w-full p-2 border border-gray-300 rounded-md"
+        />
         @if (cedula?.touched && cedula?.invalid) {
         <div class="text-red-500 text-sm">
           @if (cedula?.errors?.['required']) {
           <div>La identificación es requerida.</div>
-          }
-          @if (cedula?.errors?.['minlength']) {
+          } @if (cedula?.errors?.['minlength']) {
           <div>Mínimo 8 caracteres.</div>
           }
         </div>
         }
       </div>
 
-      <!-- Email -->
       <div class="py-2">
         <span class="mb-2 text-md">Email</span>
-        <input type="email" formControlName="email" class="w-full p-2 border border-gray-300 rounded-md" />
+        <input
+          type="email"
+          formControlName="email"
+          class="w-full p-2 border border-gray-300 rounded-md"
+        />
         @if (email?.touched && email?.invalid) {
         <div class="text-red-500 text-sm">
           @if (email?.errors?.['required']) {
           <div>El correo es obligatorio.</div>
-          }
-          @if (email?.errors?.['email']) {
+          } @if (email?.errors?.['email']) {
           <div>Formato de correo inválido.</div>
           }
         </div>
         }
       </div>
-
-      <!-- Contraseña -->
       <div class="py-2">
         <span class="mb-2 text-md">Contraseña</span>
-        <input type="password" formControlName="pass" class="w-full p-2 border border-gray-300 rounded-md" />
+        <input
+          type="password"
+          formControlName="pass"
+          class="w-full p-2 border border-gray-300 rounded-md"
+        />
         @if (pass?.touched && pass?.invalid) {
         <div class="text-red-500 text-sm">
           @if (pass?.errors?.['required']) {
           <div>La contraseña es obligatoria.</div>
-          }
-          @if (pass?.errors?.['minlength']) {
+          } @if (pass?.errors?.['minlength']) {
           <div>Mínimo 6 caracteres.</div>
           }
         </div>
         }
       </div>
 
-      <button type="submit" class="w-full bg-black text-white p-2 rounded-lg mt-6">
+      <button
+          [disabled]="form.invalid || loading()"
+          class="w-full p-2 rounded-lg mb-6 cursor-pointer bg-black text-white hover:bg-white hover:text-black hover:border hover:border-gray-300 disabled:bg-gray-400 disabled:text-gray-200 disabled:cursor-not-allowed disabled:hover:bg-gray-400 disabled:hover:text-gray-200 disabled:hover:border-none"
+        >
         Registrar
       </button>
     </form>
-
-
-    <!-- {/* right side */} -->
     <div class="relative">
       <img
         src="https://res.cloudinary.com/superlikers/image/upload/v1754639723/register_image_zptpyh.png"
-        alt="img" class="w-[400px] h-full hidden rounded-r-2xl md:block object-cover" />
-
+        alt="img"
+        class="w-[400px] h-full hidden rounded-r-2xl md:block object-cover"
+      />
     </div>
   </div>
-</div>
+</article>
+@if (loading()) {
+<app-loader [visible]="loading()"></app-loader>
+}
+@if(isError()){
+<app-modal-error [isModalOpen]="isError()" (closeModal)="isError.set($event)">
+</app-modal-error>
+}

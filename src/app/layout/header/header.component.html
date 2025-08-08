@@ -2,7 +2,7 @@
   <div class="flex flex-wrap items-center justify-center  lg:justify-between  gap-3 py-3">
 
     <!-- Logo -->
-    <a href="/" class="inline-flex items-center gap-3">
+    <a routerLink="/" class="cursor-pointer inline-flex items-center gap-3">
       <img src="https://res.cloudinary.com/superlikers/image/upload/v1754632260/Marvel_Logo_kitdot.svg" alt="Marvel"
         class="h-18 w-auto" loading="eager" />
       <span class="sr-only">Inicio</span>
@@ -11,15 +11,15 @@
     <!-- Navegación -->
     <nav class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
       <a routerLink="/profile"
-        class="rounded-xl  px-3 py-2 text-md sm:text-sm font-medium text-zinc-200 hover:bg-zinc-800/60 hover:text-white transition flex-1 sm:flex-none text-center">
+        class="cursor-pointer rounded-xl  px-3 py-2 text-md sm:text-sm font-medium text-zinc-200 hover:bg-zinc-800/60 hover:text-white transition flex-1 sm:flex-none text-center">
         Perfil
       </a>
-      <a href="/favorites"
-        class="rounded-xl  px-3 py-2 text-md font-medium text-zinc-200 hover:bg-zinc-800/60 hover:text-white transition flex-1 sm:flex-none text-center">
+      <a routerLink="/favorites"
+        class="cursor-pointer rounded-xl  px-3 py-2 text-md font-medium text-zinc-200 hover:bg-zinc-800/60 hover:text-white transition flex-1 sm:flex-none text-center">
         Favoritos
       </a>
       <button (click)="logout()" id="logoutBtn" type="button"
-        class="rounded-xl bg-red-600 px-3 py-2 text-sm sm:text-md font-semibold text-white hover:bg-red-500 active:bg-red-700 transition flex-1 sm:flex-none text-center">
+        class="cursor-pointer rounded-xl bg-red-600 px-3 py-2 text-sm sm:text-md font-semibold text-white hover:bg-red-500 active:bg-red-700 transition flex-1 sm:flex-none text-center">
         Cerrar sesión
       </button>
     </nav>

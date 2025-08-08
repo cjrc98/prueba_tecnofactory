@@ -1,26 +1,25 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MarvelApiService } from '../../../core/services/marvel.service';
-import { Comic } from '../../../domain/models/comic.model';
 import { CommonModule } from '@angular/common';
-import { FavoritesService } from '../../../core/services/favorites.service';
+import { MarvelApiService } from '../../../../core/services/marvel.service';
+import { FavoritesService } from '../../../favorite/services/favorites.service';
+import { Comic } from '../../../../domain/models/comic.model';
+import { LoaderComponent } from '@shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-comic-detail',
   templateUrl: './comic-detail.component.html',
-  styleUrl: './comic-detail.component.css',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LoaderComponent],
 })
 export class ComicDetailComponent {
   comic = signal<Comic | null>(null);
   isLoading = signal(true);
+  marvelService = inject(MarvelApiService);
+  favoritesService = inject(FavoritesService);
+  route = inject(ActivatedRoute);
 
-  constructor(
-    private route: ActivatedRoute,
-    private marvelService: MarvelApiService,
-    private favoritesService: FavoritesService
-  ) {
+  constructor() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.marvelService.getComicById(id).subscribe({
       next: (data) => {

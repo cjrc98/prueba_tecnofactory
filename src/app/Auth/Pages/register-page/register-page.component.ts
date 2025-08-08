@@ -1,50 +1,60 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   FormBuilder,
-  FormGroup,
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../Services/auth.service';
 import { Router } from '@angular/router';
+import { LoaderComponent } from '../../../shared/components/loader/loader.component';
+import { ModalErrorComponent } from '../../../shared/components/modal-error/modal-error.component';
 
 @Component({
   selector: 'app-register-page',
-  standalone: true, // si estás usando Angular standalone
-  imports: [ReactiveFormsModule, CommonModule],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    LoaderComponent,
+    ModalErrorComponent,
+  ],
   templateUrl: './register-page.component.html',
-  styleUrl: './register-page.component.css',
 })
 export class RegisterPageComponent {
-  form: FormGroup;
+  fb = inject(FormBuilder);
   authService = inject(AuthService);
   router = inject(Router);
 
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      username: ['', Validators.required],
-      cedula: ['', [Validators.required, Validators.minLength(8)]],
-      email: ['', [Validators.required, Validators.email]],
-      pass: ['', [Validators.required, Validators.minLength(6)]],
-    });
-  }
+  loading = signal<boolean>(false);
+  isError = signal<boolean>(false);
+
+  form = this.fb.group({
+    username: ['', Validators.required],
+    cedula: ['', [Validators.required, Validators.minLength(8)]],
+    email: ['', [Validators.required, Validators.email]],
+    pass: ['', [Validators.required, Validators.minLength(6)]],
+  });
 
   async submit() {
-    if (this.form.valid) {
-      console.log('🚀 Registro enviado:', this.form.value);
-      const rawForm = this.form.getRawValue();
-
+    if (this.form.invalid) return;
+    try {
+      this.loading.set(true);
       this.authService
-        .register(rawForm.email, rawForm.username, rawForm.cedula, rawForm.pass)
+        .register(
+          this.form.value.email!,
+          this.form.value.username!,
+          this.form.value.cedula!,
+          this.form.value.pass!
+        )
         .subscribe((uid) => {
-          // 👈 aquí recibes el uid
-          console.log('✅ Usuario creado con UID:', uid);
           localStorage.setItem('uid', uid);
           this.router.navigate(['/']);
         });
-    } else {
+
       this.form.markAllAsTouched();
+    } finally {
+      this.loading.set(false);
     }
   }
 

@@ -73,7 +73,6 @@ export class AuthService {
     const snap = await getDoc(userRef);
 
     if (snap.exists()) {
-      console.log('Datos del usuario:', snap.data());
       return snap.data(); // Datos del usuario
     } else {
       return null; // No existe el documento

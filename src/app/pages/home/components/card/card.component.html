@@ -1,10 +1,10 @@
-<div
-    class="shadow p-1 relative pb-16 shadow-lg rounded-3xl p-4 bg-white transform transition-transform duration-300 hover:scale-105">
+<section
+    class="shadow p-1 relative pb-16 rounded-3xl bg-white transform transition-transform duration-300 hover:scale-105">
     <img [src]="comic().image" [alt]="comic().title" class="w-full h-90 object-fill mb-2 rounded-3xl" />
     <h3 class="text-lg font-bold truncate w-full block">{{ comic().title }}</h3>
-    <p class="text-[15px] font-bold">${{ comic().price }}</p>
-    <button [routerLink]="['/comics', comic().id]"
+    <p class="text-base font-bold">${{ comic().price }}</p>
+    <button [routerLink]="['/comic', comic().id]"
         class="cursor-pointer font-['Montserrat',_sans-serif] text-base font-bold rounded-[20px] py-[5px] px-[25px] bg-gradient-to-b from-[#4e8a8a] to-[#163b3f] text-white absolute bottom-[10px]">
         Detalles
     </button>
-</div>
+</section>

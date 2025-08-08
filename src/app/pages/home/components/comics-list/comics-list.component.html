@@ -1,9 +1,11 @@
-<article class="p-4 bg-white flex flex-col gap-4 font-['Montserrat',_sans-serif] text-base font-normal">
+<article
+  class="p-4 bg-white flex flex-col gap-4 font-['Montserrat',_sans-serif] text-base font-normal"
+>
   <div class="flex justify-center items-center mb-4 gap-6">
     <button
       (click)="prevPage()"
       [disabled]="currentPage() === 0"
-      class="px-4 py-2 rounded bg-gradient-to-b from-[#eec040] to-[#f9c41c] text-black disabled:opacity-50 disabled:cursor-not-allowed"
+      class="cursor-pointer px-4 py-2 rounded bg-gradient-to-b from-[#eec040] to-[#f9c41c] text-black disabled:opacity-50 disabled:cursor-not-allowed"
     >
       Anterior
     </button>
@@ -12,21 +14,21 @@
 
     <button
       (click)="nextPage()"
-      class="px-4 py-2 rounded bg-gradient-to-b from-[#eec040] to-[#f9c41c] text-black"
+      class="cursor-pointer px-4 py-2 rounded bg-gradient-to-b from-[#eec040] to-[#f9c41c] text-black"
     >
       Siguiente
     </button>
   </div>
 
   @if (isLoading()) {
-    <app-loader [visible]="isLoading()"></app-loader>
+  <app-loader [visible]="isLoading()"></app-loader>
   } @else {
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:px-[10%]">
-      @for (comic of comics(); track comic.id) {
-        <app-card [comic]="comic"></app-card>
-      } @empty {
-        <div class="text-center py-10 text-gray-600">No se encontraron cómics.</div>
-      }
-    </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:px-[10%]">
+    @for (comic of comics(); track comic.id) {
+    <app-card [comic]="comic"></app-card>
+    } @empty {
+    <div class="text-center py-10 text-gray-600">No se encontraron cómics.</div>
+    }
+  </div>
   }
 </article>

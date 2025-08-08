@@ -1,11 +1,8 @@
 import { Routes } from '@angular/router';
 import { HomePageComponent } from './pages/home/home-page/home-page.component';
-import { ComicDetailComponent } from './features/pages/comic-detail/comic-detail.component';
 import { alreadyLoggedGuard } from './core/guards/user.guard';
 import { LayoutComponent } from './layout/layout.component';
 import { authGuard } from './core/guards/auth-guard.guard';
-import { FavoritesComponent } from './features/pages/favorites/favorites.component';
-import { ProfileComponent } from './features/pages/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -17,9 +14,23 @@ export const routes: Routes = [
         path: '',
         component: HomePageComponent,
       },
-      { path: 'comics/:id', component: ComicDetailComponent },
-      { path: 'favorites', component: FavoritesComponent },
-      { path: 'profile', component: ProfileComponent },
+      {
+        path: 'comic',
+        loadChildren: () =>
+          import('./features/comic-details/comics-details.routes').then(
+            (m) => m.routes
+          ),
+      },
+      {
+        path: 'favorites',
+        loadChildren: () =>
+          import('./features/favorite/favorite.routes').then((m) => m.routes),
+      },
+      {
+        path: 'profile',
+        loadChildren: () =>
+          import('./features/user/user.routes').then((m) => m.routes),
+      },
     ],
   },
   {

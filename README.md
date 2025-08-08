@@ -1,8 +1,28 @@
 # PruebaTecnofactory
 
+# 📄 Documentación Técnica – Marvel Comics App
+
+---
+
+
+**Título:** Documentación Técnica – Marvel Comics App  
+**Autor:** Camilo Redondo  
+**Fecha:** 08/08/2025  
+**Correo:** camilored30@gmail.com  
+
+![Marvel Logo](https://res.cloudinary.com/superlikers/image/upload/v1754632260/Marvel_Logo_kitdot.svg)
+
+---
+
+## Índice
+
 Este proyecto fue generado utilizando [Angular CLI](https://github.com/angular/angular-cli) versión 19.2.15.
 
-## Servidor de desarrollo
+
+## 1. Instalar dependencias
+npm install
+
+## 2. Servidor de desarrollo
 
 Para iniciar un servidor de desarrollo local, ejecuta:
 
@@ -10,50 +30,35 @@ Para iniciar un servidor de desarrollo local, ejecuta:
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Una vez que el servidor esté en funcionamiento, abra su navegador y navegue a `http://localhost:4200/`. La aplicación se recargará automáticamente al modificar cualquier archivo fuente.
 
-## Code scaffolding
+## 3. Herramientas y tecnologías
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Angular 19+ con Standalone Components
+- TailwindCSS
+- Firebase / Firestore
+- RxJS Signals
+- Angular Router
 
-```bash
-ng generate component component-name
-```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-```bash
-ng generate --help
-```
+## 4. Requerimientos
+- Node.js v18+
+- npm v9+
+- Angular CLI v19+
+- Navegador moderno
+- Editor de código.
 
-## Building
+## 5. Diagrama de arquitectura
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```plaintext
+┌──────────┐       ┌───────────┐       ┌──────────┐
+│  Domain  │       │   Core    │       │ Features │
+│ (Modelos)│◄─────►│Servicios  │◄─────►│Component │
+└──────────┘       └───────────┘       └──────────┘
+                       ▲
+                       │
+                 ┌─────┴─────┐
+                 │  Shared   │
+                 │Componentes│
+                 └───────────┘
